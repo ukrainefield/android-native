@@ -52,6 +52,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
             val mediaController = MediaController(context)
             mediaController.setAnchorView(holder.videoView)
             holder.videoView.setMediaController(mediaController)
+
             holder.videoView.start()
         }
 
