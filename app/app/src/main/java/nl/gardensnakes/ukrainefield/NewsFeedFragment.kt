@@ -62,10 +62,8 @@ class NewsFeedFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
             if(feedData != null) {
                 feedCardAdapter = FeedCardAdapter(feedData.messages)
-                feedRecyclerView!!.adapter = feedCardAdapter
+                feedRecyclerView.adapter = feedCardAdapter
                 feedRecyclerView.layoutManager = LinearLayoutManager(requireView().context);
-
-                requireView().findViewById<TextView>(R.id.card_text).text = "Doei"
             }
         }
         jobs.add(job)
