@@ -1,23 +1,27 @@
 package nl.gardensnakes.ukrainefield.view.adapter
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.VideoView
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.dto.FeedMessageResponse
 
+
 class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
 
+    lateinit var context: Context
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
         // that is used to hold list item
+        context = parent.context
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.feed_card, parent, false)
 
@@ -45,7 +49,29 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
             holder.imageView.visibility = View.GONE
             holder.videoView.visibility = View.VISIBLE
             holder.videoView.setVideoPath(feedData.videos[0])
-            holder.videoView.start();
+            val mediaController = MediaController(context)
+            mediaController.setAnchorView(holder.videoView)
+            holder.videoView.setMediaController(mediaController)
+            holder.videoView.start()
+        }
+
+        if(feedData.messageURL == null){
+            holder.shareView.visibility = View.GONE
+            holder.browserButtonView.visibility = View.GONE
+        }
+
+        holder.shareView.setOnClickListener{
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, getTitleText(feedData));
+            sendIntent.putExtra(Intent.EXTRA_TEXT, feedData.messageURL)
+            sendIntent.type = "text/plain"
+            startActivity(context, sendIntent, null)
+        }
+
+        holder.browserButtonView.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(feedData.messageURL))
+            startActivity(context, browserIntent,null)
         }
 
     }

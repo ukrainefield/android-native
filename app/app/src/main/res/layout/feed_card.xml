@@ -27,6 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:contentDescription="Image Thumbnail"
             app:shapeAppearanceOverlay="@style/roundedImageView"
             android:id="@+id/feed_card_video"
