@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import nl.gardensnakes.ukrainefield.R
+import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.FeedMessageResponse
 
 
@@ -40,7 +41,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
         try {
 
             Glide.with(holder.imageView)
-                .load(feedData.images[0])
+                .load("${HttpRoutes.MEDIA_PROXY}/${feedData.images[0]}")
                 .into(holder.imageView)
         } catch (E: Exception){}
         holder.titleView.text = getTitleText(feedData)
@@ -52,7 +53,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
         else if(feedData.videos.isNotEmpty()) {
             holder.imageView.visibility = View.GONE
             holder.videoView.visibility = View.VISIBLE
-            holder.videoView.setVideoPath(feedData.videos[0])
+            holder.videoView.setVideoPath("${HttpRoutes.MEDIA_PROXY}/${feedData.videos[0]}")
             val mediaController = MediaController(context)
             mediaController.setAnchorView(holder.videoView)
             holder.videoView.setMediaController(mediaController)

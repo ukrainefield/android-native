@@ -1,6 +1,8 @@
 package nl.gardensnakes.ukrainefield
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.TextureView
@@ -20,11 +22,13 @@ class NewsFeedFragment : Fragment() {
     private val feedService: FeedService = FeedService.create()
     private var scope = CoroutineScope(Job() + Dispatchers.Main)
     private var jobs: MutableList<Job> = mutableListOf()
+    private lateinit var preferences: SharedPreferences
 
     private lateinit var feedRecyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var feedCardAdapter: FeedCardAdapter
+    private var useProxyServer: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,10 @@ class NewsFeedFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_newsfeed, container, false)
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        useProxyServer = preferences.getBoolean("useProxy", false)
 
         swipeRefreshLayout = view.findViewById(R.id.newsfeed_refresh_layout)
         feedRecyclerView = view.findViewById(R.id.newsfeed_recycle_view)

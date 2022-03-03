@@ -6,6 +6,7 @@ object HttpRoutes {
     private const val ForceAccAPI: Boolean = true
     private const val BASE_URL_ACC = "https://ukrainefield-feed.mrproper.dev"
     private const val BASE_URL_DEV = "https://ukrainefield-feed.mrproper.dev"
+    const val MEDIA_PROXY = "https://ukraine-proxy.mrproper.dev/proxy/media"
     var feed = "${getBaseUrl()}/feed"
 
     private fun getBaseUrl() : String{
