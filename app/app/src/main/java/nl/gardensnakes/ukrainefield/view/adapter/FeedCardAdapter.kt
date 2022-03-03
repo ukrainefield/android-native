@@ -2,6 +2,8 @@ package nl.gardensnakes.ukrainefield.view.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +35,8 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
         val feedData = mList[position]
 
+        resetView(holder)
+
         try {
 
             Glide.with(holder.imageView)
@@ -52,7 +56,6 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
             val mediaController = MediaController(context)
             mediaController.setAnchorView(holder.videoView)
             holder.videoView.setMediaController(mediaController)
-
             holder.videoView.start()
         }
 
@@ -80,6 +83,12 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    private fun resetView(holder: ViewHolder){
+        holder.videoView.stopPlayback()
+        holder.videoView.visibility = View.GONE
+        holder.imageView.visibility = View.VISIBLE
     }
 
     private fun getTitleText(feedData: FeedMessageResponse): String{
