@@ -5,14 +5,14 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
-import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedResponse
+import nl.gardensnakes.ukrainefield.data.remote.dto.map.MapResponse
 
-interface FeedService {
-    suspend fun getAllFeed(): FeedResponse?
+interface MapService {
+    suspend fun getAllMaps(): MapResponse?
 
     companion object{
-        fun create(): FeedService{
-            return FeedServiceImpl(
+        fun create(): MapService{
+            return MapServiceImpl(
                 client = HttpClient(Android) {
                     install(Logging){
                         level = LogLevel.ALL

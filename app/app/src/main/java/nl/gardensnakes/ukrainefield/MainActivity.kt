@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.newsfeed -> {
                     fragment = NewsFeedFragment()
                 }
+                R.id.ukraine_map -> {
+                    fragment = MapFragment()
+                }
                 R.id.settings -> {
                     //TODO
                     //settingsFragment = SettingsFragment()

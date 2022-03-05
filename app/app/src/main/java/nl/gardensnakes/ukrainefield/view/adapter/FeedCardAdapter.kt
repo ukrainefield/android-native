@@ -2,8 +2,6 @@ package nl.gardensnakes.ukrainefield.view.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
-import nl.gardensnakes.ukrainefield.data.remote.dto.FeedMessageResponse
+import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
 
 
 class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {

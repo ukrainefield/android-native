@@ -1,4 +1,4 @@
-package nl.gardensnakes.ukrainefield.data.remote.dto
+package nl.gardensnakes.ukrainefield.data.remote.dto.feed
 
 import kotlinx.serialization.Serializable
 

@@ -8,21 +8,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
+import nl.gardensnakes.ukrainefield.data.remote.MapService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
+import nl.gardensnakes.ukrainefield.view.adapter.MapCardAdapter
 
-class NewsFeedFragment : Fragment() {
+class MapFragment : Fragment() {
 
-    private val feedService: FeedService = FeedService.create()
+    private val feedService: MapService = MapService.create()
     private var scope = CoroutineScope(Job() + Dispatchers.Main)
     private var jobs: MutableList<Job> = mutableListOf()
 
-    private lateinit var feedRecyclerView: RecyclerView
+    private lateinit var mapRecyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    private lateinit var feedCardAdapter: FeedCardAdapter
+    private lateinit var mapCardAdapter: MapCardAdapter
     private var useProxyServer: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +39,15 @@ class NewsFeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_newsfeed, container, false)
+        val view = inflater.inflate(R.layout.fragment_map, container, false)
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
 
-        swipeRefreshLayout = view.findViewById(R.id.newsfeed_refresh_layout)
-        feedRecyclerView = view.findViewById(R.id.newsfeed_recycle_view)
+        swipeRefreshLayout = view.findViewById(R.id.map_refresh_layout)
+        mapRecyclerView = view.findViewById(R.id.map_recycle_view)
 
-        feedCardAdapter = FeedCardAdapter(emptyList())
-        feedRecyclerView.adapter = feedCardAdapter
+        mapCardAdapter = MapCardAdapter(emptyList())
+        mapRecyclerView.adapter = mapCardAdapter
 
         setupRefreshLayout()
         getFeedData()
@@ -59,34 +64,14 @@ class NewsFeedFragment : Fragment() {
     private fun getFeedData() {
         swipeRefreshLayout.isRefreshing = true
         var job = scope.launch {
-            val feedData = feedService.getAllFeed()
+            val feedData = feedService.getAllMaps()
             swipeRefreshLayout.isRefreshing = false
             if(feedData != null) {
-                feedCardAdapter = FeedCardAdapter(feedData.messages)
-                feedRecyclerView.adapter = feedCardAdapter
-                feedRecyclerView.layoutManager = LinearLayoutManager(requireView().context);
+                mapCardAdapter = MapCardAdapter(feedData.mapData)
+                mapRecyclerView.adapter = mapCardAdapter
+                mapRecyclerView.layoutManager = LinearLayoutManager(requireView().context);
             }
         }
         jobs.add(job)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        scope = CoroutineScope(Job() + Dispatchers.Main)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        cleanUp()
-    }
-
-    private fun cleanUp(){
-        scope.cancel()
-        jobs.forEach {
-            try {
-                it.cancel("View closed")
-            } catch(e: Exception){}
-        }
-        jobs = mutableListOf()
     }
 }

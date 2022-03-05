@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/map_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Widget.Material3.CardView.Elevated"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Media -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="350dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="Image Thumbnail"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            android:id="@+id/map_card_thumbnail"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/map_card_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@string/reuters_invasion_map_updated_date"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto"
+                android:text="Reuters message text"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?android:attr/textColorSecondary"
+                android:id="@+id/map_card_text"
+                />
+
+        </LinearLayout>
+
+        Buttons
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Share"
+                app:icon="@drawable/ic_baseline_share_24"
+                style="?attr/borderlessButtonStyle"
+                android:id="@+id/map_card_share_button"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="6dp"
+                android:autoSizeMaxTextSize="16dp"
+                android:autoSizeStepGranularity="2dp"
+                android:maxLines="1"
+                android:text="Open Article in Browser"
+                app:icon="@drawable/ic_baseline_open_in_browser_24"
+                style="?attr/borderlessButtonStyle"
+                android:id="@+id/map_card_open_article_button"
+                />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Open Map in Browser"
+            app:icon="@drawable/ic_baseline_map_24"
+            style="?attr/borderlessButtonStyle"
+            android:id="@+id/map_card_open_card_button"
+            />
+    </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
