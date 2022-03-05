@@ -10,8 +10,10 @@ import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.afdhal_fa.imageslider.ImageSlider
+import com.afdhal_fa.imageslider.`interface`.ItemClickListener
 import com.afdhal_fa.imageslider.model.SlideUIModel
 import com.bumptech.glide.Glide
+import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
@@ -41,9 +43,18 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
         if(feedData.images.isNotEmpty()){
             val imageList = ArrayList<SlideUIModel>()
             feedData.images.forEach {
-                imageList.add(SlideUIModel(it, ""))
+                imageList.add(SlideUIModel("${HttpRoutes.MEDIA_PROXY}/$it", ""))
             }
             holder.imageSlide.setImageList(imageList)
+            holder.imageSlide.setItemClickListener(object : ItemClickListener {
+                override fun onItemClick(model: SlideUIModel, position: Int) {
+                    val intent = Intent(context, MediaDetailActivity::class.java).apply {
+                        putExtra("MEDIA_URL", model.imageUrl)
+                        putExtra("MEDIA_TYPE", "image")
+                    }
+                    startActivity(context, intent, null)
+                }
+            })
         }
         holder.imageSlide.clipToOutline = true
 

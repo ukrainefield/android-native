@@ -41,7 +41,7 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
 
         resetView(holder)
 
-        holder.thumbnail.showImage(Uri.parse(mapData.imagePath))
+        holder.thumbnail.showImage(Uri.parse("${HttpRoutes.MEDIA_PROXY}/${mapData.imagePath}"))
         holder.thumbnail.clipToOutline = true
 
         holder.title.text = "Reuters Invasion Map | Updated ${mapData.displayUpdatedTime}"

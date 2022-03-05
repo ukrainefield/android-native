@@ -73,7 +73,9 @@ class NewsFeedFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         scope = CoroutineScope(Job() + Dispatchers.Main)
-        getFeedData()
+        if(feedCardAdapter.itemCount == 0) {
+            getFeedData()
+        }
     }
 
     override fun onPause() {

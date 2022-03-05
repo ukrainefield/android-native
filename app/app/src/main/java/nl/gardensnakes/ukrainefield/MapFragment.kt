@@ -77,7 +77,9 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         scope = CoroutineScope(Job() + Dispatchers.Main)
-        getFeedData()
+        if(mapCardAdapter.itemCount == 0) {
+            getFeedData()
+        }
     }
 
     override fun onPause() {
