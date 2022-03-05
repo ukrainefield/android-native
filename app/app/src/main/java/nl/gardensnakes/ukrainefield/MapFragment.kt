@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.MapService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
@@ -74,4 +71,26 @@ class MapFragment : Fragment() {
         }
         jobs.add(job)
     }
+
+    override fun onResume() {
+        super.onResume()
+        scope = CoroutineScope(Job() + Dispatchers.Main)
+        getFeedData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cleanUp()
+    }
+
+    private fun cleanUp(){
+        scope.cancel()
+        jobs.forEach {
+            try {
+                it.cancel("View closed")
+            } catch(e: Exception){}
+        }
+        jobs = mutableListOf()
+    }
+
 }
