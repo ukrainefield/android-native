@@ -84,4 +84,5 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.github.Fuadafdhal:Auto-Image-Slider:1.0'
 }

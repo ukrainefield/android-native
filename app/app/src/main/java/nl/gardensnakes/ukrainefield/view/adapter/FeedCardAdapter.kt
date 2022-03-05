@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.afdhal_fa.imageslider.ImageSlider
+import com.afdhal_fa.imageslider.model.SlideUIModel
 import com.bumptech.glide.Glide
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
@@ -36,20 +38,22 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
         resetView(holder)
 
-        try {
+        if(feedData.images.isNotEmpty()){
+            val imageList = ArrayList<SlideUIModel>()
+            feedData.images.forEach {
+                imageList.add(SlideUIModel(it, ""))
+            }
+            holder.imageSlide.setImageList(imageList)
+        }
 
-            Glide.with(holder.imageView)
-                .load("${HttpRoutes.MEDIA_PROXY}/${feedData.images[0]}")
-                .into(holder.imageView)
-        } catch (E: Exception){}
         holder.titleView.text = getTitleText(feedData)
         holder.textView.text = feedData.text
 
         if(feedData.videos.isEmpty() && feedData.images.isEmpty()){
-            holder.imageView.visibility = View.GONE
+            holder.imageSlide.visibility = View.GONE
         }
         else if(feedData.videos.isNotEmpty()) {
-            holder.imageView.visibility = View.GONE
+            holder.imageSlide.visibility = View.GONE
             holder.videoView.visibility = View.VISIBLE
             holder.videoView.setVideoPath("${HttpRoutes.MEDIA_PROXY}/${feedData.videos[0]}")
             val mediaController = MediaController(context)
@@ -87,7 +91,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
     private fun resetView(holder: ViewHolder){
         holder.videoView.stopPlayback()
         holder.videoView.visibility = View.GONE
-        holder.imageView.visibility = View.VISIBLE
+        holder.imageSlide.visibility = View.VISIBLE
     }
 
     private fun getTitleText(feedData: FeedMessageResponse): String{
@@ -103,7 +107,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.feed_card_thumbnail)
+        val imageSlide = itemView.findViewById<ImageSlider>(R.id.feed_card_thumbnail)
         val titleView: TextView = itemView.findViewById(R.id.feed_card_title)
         val textView: TextView = itemView.findViewById(R.id.feed_card_text)
         val shareView: Button = itemView.findViewById(R.id.feed_card_share_button)
