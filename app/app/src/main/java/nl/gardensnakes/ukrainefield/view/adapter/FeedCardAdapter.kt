@@ -45,6 +45,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
             }
             holder.imageSlide.setImageList(imageList)
         }
+        holder.imageSlide.clipToOutline = true
 
         holder.titleView.text = getTitleText(feedData)
         holder.textView.text = feedData.text

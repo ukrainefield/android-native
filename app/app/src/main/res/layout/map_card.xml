@@ -13,14 +13,14 @@
         android:orientation="vertical">
 
         <!-- Media -->
-        <com.google.android.material.imageview.ShapeableImageView
+        <com.github.piasy.biv.view.BigImageView
             android:layout_width="match_parent"
-            android:visibility="visible"
             android:layout_height="350dp"
-            android:scaleType="fitCenter"
-            android:contentDescription="Image Thumbnail"
-            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:failureImageInitScaleType="center"
+            app:optimizeDisplay="true"
+            app:initScaleType="fitCenter"
             android:id="@+id/map_card_thumbnail"
+            android:background="@drawable/layout_bg"
             />
 
         <LinearLayout

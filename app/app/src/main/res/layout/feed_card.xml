@@ -25,6 +25,7 @@
             android:contentDescription="Image Thumbnail"
             app:shapeAppearanceOverlay="@style/roundedImageView"
             android:id="@+id/feed_card_thumbnail"
+            android:background="@drawable/layout_bg"
             />
         <VideoView
             android:visibility="gone"

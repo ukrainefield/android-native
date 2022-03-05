@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
 import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.MapService

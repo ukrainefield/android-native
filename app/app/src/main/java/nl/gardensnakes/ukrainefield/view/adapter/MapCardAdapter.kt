@@ -10,6 +10,9 @@ import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
+import com.github.piasy.biv.view.BigImageView
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
@@ -24,6 +27,7 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
         // inflates the card_view_design view
         // that is used to hold list item
         context = parent.context
+        BigImageViewer.initialize(GlideImageLoader.with(context));
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.map_card, parent, false)
 
@@ -37,12 +41,8 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
 
         resetView(holder)
 
-        try {
-
-            Glide.with(holder.thumbnail)
-                .load("${HttpRoutes.MEDIA_PROXY}/${mapData.imagePath}")
-                .into(holder.thumbnail)
-        } catch (E: Exception){}
+        holder.thumbnail.showImage(Uri.parse(mapData.imagePath))
+        holder.thumbnail.clipToOutline = true
 
         holder.title.text = "Reuters Invasion Map | Updated ${mapData.displayUpdatedTime}"
         holder.description.text = mapData.messageText
@@ -78,7 +78,7 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        var thumbnail: ImageView = ItemView.findViewById(R.id.map_card_thumbnail)
+        var thumbnail: BigImageView = ItemView.findViewById(R.id.map_card_thumbnail)
         var title: TextView = ItemView.findViewById(R.id.map_card_title)
         var description: TextView = ItemView.findViewById(R.id.map_card_text)
         var shareButton: Button = ItemView.findViewById(R.id.map_card_share_button)
