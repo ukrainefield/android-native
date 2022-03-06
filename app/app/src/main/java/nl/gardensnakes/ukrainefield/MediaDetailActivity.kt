@@ -44,7 +44,7 @@ class MediaDetailActivity : AppCompatActivity() {
         else{
             imageView.visibility = View.GONE
             videoView.visibility = View.VISIBLE
-            videoView.setVideoPath("${HttpRoutes.MEDIA_PROXY}/$mediaURL")
+            videoView.setVideoPath(mediaURL)
             val mediaController = MediaController(this)
             mediaController.setAnchorView(videoView)
             videoView.setMediaController(mediaController)

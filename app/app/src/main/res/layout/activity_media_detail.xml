@@ -7,25 +7,27 @@
     tools:context=".MediaDetailActivity">
 
     <com.github.piasy.biv.view.BigImageView
+        android:id="@+id/media_detail_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:failureImageInitScaleType="center"
-        app:optimizeDisplay="true"
-        app:initScaleType="fitCenter"
-        android:id="@+id/media_detail_image"
         android:background="@drawable/layout_bg"
-        />
+        android:visibility="visible"
+        app:failureImageInitScaleType="center"
+        app:initScaleType="fitCenter"
+        app:optimizeDisplay="true" />
 
     <VideoView
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:contentDescription="Image Thumbnail"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
         android:id="@+id/media_detail_video"
-        />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

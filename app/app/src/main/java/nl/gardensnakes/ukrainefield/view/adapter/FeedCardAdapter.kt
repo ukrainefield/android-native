@@ -51,7 +51,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
             holder.imageSlide.setItemClickListener(object : ItemClickListener {
                 override fun onItemClick(model: SlideUIModel, position: Int) {
                     val intent = Intent(context, MediaDetailActivity::class.java).apply {
-                        putExtra("MEDIA_URL", model.imageUrl)
+                        putExtra("MEDIA_URL", "${HttpRoutes.MEDIA_PROXY}/${model.imageUrl}")
                         putExtra("MEDIA_TYPE", "image")
                     }
                     startActivity(context, intent, null)
@@ -76,6 +76,15 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
             mediaController.setAnchorView(holder.videoView)
             holder.videoView.setMediaController(mediaController)
             holder.videoView.start()
+
+            holder.videoView.setOnClickListener {
+                val intent = Intent(context, MediaDetailActivity::class.java).apply {
+                    putExtra("MEDIA_URL", "${HttpRoutes.MEDIA_PROXY}/${feedData.videos[0]}")
+                    putExtra("MEDIA_TYPE", "video")
+                }
+                startActivity(context, intent, null)
+            }
+
         }
 
         if(feedData.messageURL == null){
