@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.github.piasy.biv.BigImageViewer
 import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.github.piasy.biv.view.BigImageView
+import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
@@ -52,6 +53,14 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
             sendIntent.putExtra(Intent.EXTRA_TEXT, mapData.messageLink)
             sendIntent.type = "text/plain"
             startActivity(context, sendIntent, null)
+        }
+
+        holder.thumbnail.setOnClickListener {
+            val intent = Intent(context, MediaDetailActivity::class.java).apply {
+                putExtra("MEDIA_URL", mapData.imagePath)
+                putExtra("MEDIA_TYPE", "image")
+            }
+            startActivity(context, intent, null)
         }
 
         holder.articleButton.setOnClickListener {
