@@ -72,7 +72,7 @@ class MapFragment : Fragment() {
         var job = scope.launch {
             val feedData = feedService.getAllMaps()
             swipeRefreshLayout.isRefreshing = false
-            if(feedData != null) {
+            if(feedData != null && context != null) {
                 mapCardAdapter = MapCardAdapter(feedData.mapData)
                 mapRecyclerView.adapter = mapCardAdapter
                 mapRecyclerView.layoutManager = LinearLayoutManager(requireView().context);

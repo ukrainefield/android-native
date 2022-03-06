@@ -69,7 +69,7 @@ class NewsFeedFragment : Fragment() {
         var job = scope.launch {
             val feedData = feedService.getAllFeed()
             swipeRefreshLayout.isRefreshing = false
-            if(feedData != null) {
+            if(feedData != null && context != null) {
                 feedCardAdapter = FeedCardAdapter(feedData.messages)
                 feedRecyclerView.adapter = feedCardAdapter
                 feedRecyclerView.layoutManager = LinearLayoutManager(requireView().context);
