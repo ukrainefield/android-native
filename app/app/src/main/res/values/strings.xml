@@ -3,4 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reuters_invasion_map_updated_date">Reuters Invasion map | Updated: Date</string>
+    <string name="posted_at">Posted at:</string>
+    <string name="share">Share</string>
+    <string name="open_in_browser">Open in Browser</string>
+    <string name="open_article_in_browser">Open Article in Browser</string>
+    <string name="open_map_in_browser">Open Map in Browser</string>
 </resources>

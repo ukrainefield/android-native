@@ -50,21 +50,32 @@
                 android:id="@+id/feed_card_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Title | Author"
-                android:textColor="?android:attr/textColorPrimary"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/feed_card_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="Text"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/roboto"
-                android:text="Text"
+                android:text="@string/posted_at"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?android:attr/textColorSecondary"
-                android:id="@+id/feed_card_text"
+                android:id="@+id/feed_card_posted_at_text"
                 />
 
         </LinearLayout>
@@ -79,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Share"
+                android:text="@string/share"
                 app:icon="@drawable/ic_baseline_share_24"
                 style="?attr/borderlessButtonStyle"
                 android:id="@+id/feed_card_share_button"
@@ -88,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Open in Browser"
+                android:text="@string/open_in_browser"
                 app:icon="@drawable/ic_baseline_open_in_browser_24"
                 style="?attr/borderlessButtonStyle"
                 android:id="@+id/feed_card_browser_button"

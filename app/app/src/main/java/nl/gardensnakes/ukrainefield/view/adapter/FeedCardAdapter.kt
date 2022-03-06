@@ -3,6 +3,7 @@ package nl.gardensnakes.ukrainefield.view.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
+import nl.gardensnakes.ukrainefield.helper.TimeHelper
 
 
 class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
@@ -60,6 +62,8 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
         holder.titleView.text = getTitleText(feedData)
         holder.textView.text = feedData.text
+
+        holder.postedAtText.text = "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
 
         if(feedData.videos.isEmpty() && feedData.images.isEmpty()){
             holder.imageSlide.visibility = View.GONE
@@ -122,6 +126,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
         val imageSlide = itemView.findViewById<ImageSlider>(R.id.feed_card_thumbnail)
         val titleView: TextView = itemView.findViewById(R.id.feed_card_title)
         val textView: TextView = itemView.findViewById(R.id.feed_card_text)
+        val postedAtText: TextView = itemView.findViewById(R.id.feed_card_posted_at_text)
         val shareView: Button = itemView.findViewById(R.id.feed_card_share_button)
         val browserButtonView: Button = itemView.findViewById(R.id.feed_card_browser_button)
         val videoView: VideoView = itemView.findViewById(R.id.feed_card_video)
