@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.piasy.biv.BigImageViewer
 import com.github.piasy.biv.loader.glide.GlideImageLoader
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.MapService
@@ -29,6 +30,8 @@ class MapFragment : Fragment() {
     private lateinit var mapCardAdapter: MapCardAdapter
     private var useProxyServer: Boolean = false
 
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -39,6 +42,8 @@ class MapFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_map, container, false)
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(view.context);
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
 

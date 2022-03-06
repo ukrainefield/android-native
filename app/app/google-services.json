@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "86876526205",
+    "project_id": "ukrainefield",
+    "storage_bucket": "ukrainefield.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86876526205:android:1996687809ddddc054c314",
+        "android_client_info": {
+          "package_name": "nl.gardensnakes.ukrainefield"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86876526205-kbuh0pq9f5v6nu6k1rouqg0vghrd9obq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxfeQE_QSjPdiINZiZv-31vTVqkc6-Dz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86876526205-kbuh0pq9f5v6nu6k1rouqg0vghrd9obq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

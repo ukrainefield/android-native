@@ -1,17 +1,20 @@
 package nl.gardensnakes.ukrainefield
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
+
 
 class NewsFeedFragment : Fragment() {
 
@@ -24,6 +27,7 @@ class NewsFeedFragment : Fragment() {
 
     private lateinit var feedCardAdapter: FeedCardAdapter
     private var useProxyServer: Boolean = false
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,8 @@ class NewsFeedFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_newsfeed, container, false)
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(view.context);
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
 

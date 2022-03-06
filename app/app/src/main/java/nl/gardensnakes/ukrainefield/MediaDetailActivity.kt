@@ -10,6 +10,7 @@ import android.widget.VideoView
 import com.github.piasy.biv.BigImageViewer
 import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.github.piasy.biv.view.BigImageView
+import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 
 class MediaDetailActivity : AppCompatActivity() {
@@ -18,8 +19,14 @@ class MediaDetailActivity : AppCompatActivity() {
 
     private lateinit var imageView: BigImageView
     private lateinit var videoView: VideoView
+
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         BigImageViewer.initialize(GlideImageLoader.with(this));
         setContentView(R.layout.activity_media_detail)
         BigImageViewer.initialize(GlideImageLoader.with(this));
