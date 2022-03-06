@@ -15,6 +15,7 @@ import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.MapService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
+import nl.gardensnakes.ukrainefield.helper.SwipeRefreshHelper
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
 import nl.gardensnakes.ukrainefield.view.adapter.MapCardAdapter
 
@@ -60,6 +61,7 @@ class MapFragment : Fragment() {
     }
 
     private fun setupRefreshLayout() {
+        SwipeRefreshHelper.setupColors(swipeRefreshLayout, requireContext())
         swipeRefreshLayout.setOnRefreshListener {
             getFeedData()
         }

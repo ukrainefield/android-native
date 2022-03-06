@@ -13,6 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
+import nl.gardensnakes.ukrainefield.helper.SwipeRefreshHelper
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
 
 
@@ -57,6 +58,7 @@ class NewsFeedFragment : Fragment() {
     }
 
     private fun setupRefreshLayout() {
+        SwipeRefreshHelper.setupColors(swipeRefreshLayout, requireContext())
         swipeRefreshLayout.setOnRefreshListener {
             getFeedData()
         }

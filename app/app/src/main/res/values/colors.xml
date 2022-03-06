@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="logo_background">#001532</color>
+    <color name="ukraineAzure">#0057b7</color>
+    <color name="ukraineYellow">#ffd700 </color>
 </resources>
