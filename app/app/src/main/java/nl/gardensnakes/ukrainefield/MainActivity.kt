@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.ukraine_map -> {
                     fragment = MapFragment()
                 }
+                R.id.bookmarks -> {
+                    fragment = BookmarkFragment()
+                }
                 R.id.settings -> {
                     fragment = SettingsFragment()
                 }

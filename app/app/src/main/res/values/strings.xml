@@ -10,4 +10,10 @@
     <string name="open_map_in_browser">Open Map in Browser</string>
     <string name="auto_play_videos">Autoplay videos</string>
     <string name="media">Media</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="remove_bookmark">Unbookmark</string>
+    <string name="feed">Feed</string>
+    <string name="ukraine_map">Ukraine Map</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="settings">Settings</string>
 </resources>

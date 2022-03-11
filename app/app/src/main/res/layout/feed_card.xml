@@ -105,6 +105,21 @@
                 android:id="@+id/feed_card_browser_button"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/bookmark"
+                app:icon="@drawable/ic_baseline_no_bookmark_24"
+                style="?attr/borderlessButtonStyle"
+                android:id="@+id/feed_card_bookmark_button"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -2,14 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/newsfeed"
-        android:title="Feed"
+        android:title="@string/feed"
         android:icon="@drawable/ic_baseline_rss_feed_24"/>
     <item
         android:id="@+id/ukraine_map"
-        android:title="Ukraine Map"
+        android:title="@string/ukraine_map"
         android:icon="@drawable/ic_baseline_map_24"/>
     <item
+        android:id="@+id/bookmarks"
+        android:title="@string/bookmarks"
+        android:icon="@drawable/ic_baseline_bookmark_24"/>
+    <item
         android:id="@+id/settings"
-        android:title="Settings"
+        android:title="@string/settings"
         android:icon="@drawable/ic_baseline_settings_24"/>
 </menu>

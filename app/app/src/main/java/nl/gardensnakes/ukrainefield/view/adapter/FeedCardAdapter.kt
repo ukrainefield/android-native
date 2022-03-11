@@ -18,11 +18,13 @@ import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
+import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
 import nl.gardensnakes.ukrainefield.helper.PreferenceHelper
 import nl.gardensnakes.ukrainefield.helper.TimeHelper
+import java.lang.Exception
 
 
-class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
+class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val deleteOnUnBookmark: Boolean = false) :
     RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
 
     lateinit var context: Context
@@ -42,6 +44,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val feedData = mList[position]
+        val bookmarkHelper = BookmarkHelper()
 
         resetView(holder)
 
@@ -68,6 +71,8 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
 
         holder.postedAtText.text =
             "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
+
+        updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder, position)
 
         if (feedData.videos.isEmpty() && feedData.images.isEmpty()) {
             holder.imageSlide.visibility = View.GONE
@@ -115,11 +120,34 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
             startActivity(context, browserIntent, null)
         }
 
+        holder.bookmarkButton.setOnClickListener {
+            bookmarkHelper.bookmark(feedData, context)
+            updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder, position)
+        }
+
     }
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    private fun updateBookmarkText(bookmarkHelper: BookmarkHelper, messageUrl: String, holder: ViewHolder, position: Int){
+        var isBookmarked = bookmarkHelper.isFavorite(messageUrl, context)
+        if(isBookmarked){
+            holder.bookmarkButton.text = context.getString(R.string.remove_bookmark)
+        }
+        else{
+            holder.bookmarkButton.text = context.getString(R.string.bookmark)
+            if(deleteOnUnBookmark){
+                try {
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, mList.size)
+                    mList = BookmarkHelper().getAll(context) ?: emptyList()
+                    mList = mList.sortedByDescending { it.epochTime }
+                } catch(e: Exception){}
+            }
+        }
     }
 
     private fun resetView(holder: ViewHolder) {
@@ -147,5 +175,6 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
         val shareView: Button = itemView.findViewById(R.id.feed_card_share_button)
         val browserButtonView: Button = itemView.findViewById(R.id.feed_card_browser_button)
         val videoView: VideoView = itemView.findViewById(R.id.feed_card_video)
+        var bookmarkButton: Button = ItemView.findViewById(R.id.feed_card_bookmark_button)
     }
 }
