@@ -48,9 +48,12 @@ class MediaDetailActivity : AppCompatActivity() {
             val mediaController = MediaController(this)
             mediaController.setAnchorView(videoView)
             videoView.setMediaController(mediaController)
-            videoView.seekTo(30)
+
             if (PreferenceHelper.shouldAutoPlayVideos(this)) {
                 videoView.start()
+            }
+            else{
+                videoView.seekTo(250)
             }
         }
     }

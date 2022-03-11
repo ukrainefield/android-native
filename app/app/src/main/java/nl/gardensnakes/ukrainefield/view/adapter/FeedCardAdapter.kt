@@ -82,6 +82,9 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
             if (PreferenceHelper.shouldAutoPlayVideos(context)) {
                 holder.videoView.start()
             }
+            else{
+                holder.videoView.seekTo(250)
+            }
 
             holder.videoView.setOnClickListener {
                 val intent = Intent(context, MediaDetailActivity::class.java).apply {
