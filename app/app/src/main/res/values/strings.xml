@@ -10,4 +10,6 @@
     <string name="open_map_in_browser">Open Map in Browser</string>
     <string name="auto_play_videos">Autoplay videos</string>
     <string name="media">Media</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="remove_bookmark">Unbookmark</string>
 </resources>
