@@ -21,9 +21,10 @@ import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
 import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
 import nl.gardensnakes.ukrainefield.helper.PreferenceHelper
 import nl.gardensnakes.ukrainefield.helper.TimeHelper
+import java.lang.Exception
 
 
-class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
+class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val deleteOnUnBookmark: Boolean = false) :
     RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
 
     lateinit var context: Context
@@ -71,7 +72,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
         holder.postedAtText.text =
             "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
 
-        updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder)
+        updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder, position)
 
         if (feedData.videos.isEmpty() && feedData.images.isEmpty()) {
             holder.imageSlide.visibility = View.GONE
@@ -121,7 +122,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
 
         holder.bookmarkButton.setOnClickListener {
             bookmarkHelper.bookmark(feedData, context)
-            updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder)
+            updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder, position)
         }
 
     }
@@ -131,13 +132,21 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
         return mList.size
     }
 
-    private fun updateBookmarkText(bookmarkHelper: BookmarkHelper, messageUrl: String, holder: ViewHolder){
+    private fun updateBookmarkText(bookmarkHelper: BookmarkHelper, messageUrl: String, holder: ViewHolder, position: Int){
         var isBookmarked = bookmarkHelper.isFavorite(messageUrl, context)
         if(isBookmarked){
             holder.bookmarkButton.text = context.getString(R.string.remove_bookmark)
         }
         else{
             holder.bookmarkButton.text = context.getString(R.string.bookmark)
+            if(deleteOnUnBookmark){
+                try {
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, mList.size)
+                    mList = BookmarkHelper().getAll(context) ?: emptyList()
+                    mList = mList.sortedByDescending { it.epochTime }
+                } catch(e: Exception){}
+            }
         }
     }
 

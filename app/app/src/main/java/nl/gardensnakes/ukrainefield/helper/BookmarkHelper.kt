@@ -35,7 +35,7 @@ class BookmarkHelper {
         } ?: false
     }
 
-    private fun getAll(context: Context?): List<FeedMessageResponse>? {
+    fun getAll(context: Context?): List<FeedMessageResponse>? {
         return if(bookmarkedFeed != null) {
             return bookmarkedFeed
         } else {
