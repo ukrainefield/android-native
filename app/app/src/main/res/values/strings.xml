@@ -8,4 +8,6 @@
     <string name="open_in_browser">Open in Browser</string>
     <string name="open_article_in_browser">Open Article in Browser</string>
     <string name="open_map_in_browser">Open Map in Browser</string>
+    <string name="auto_play_videos">Auto play videos</string>
+    <string name="media">Media</string>
 </resources>

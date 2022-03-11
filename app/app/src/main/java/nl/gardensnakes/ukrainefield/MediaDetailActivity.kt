@@ -12,6 +12,7 @@ import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.github.piasy.biv.view.BigImageView
 import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
+import nl.gardensnakes.ukrainefield.helper.PreferenceHelper
 
 class MediaDetailActivity : AppCompatActivity() {
     private lateinit var mediaURL: String
@@ -37,18 +38,20 @@ class MediaDetailActivity : AppCompatActivity() {
         videoView = findViewById(R.id.media_detail_video)
 
 
-        if(mediaType == "image"){
+        if (mediaType == "image") {
             imageView.showImage(Uri.parse(mediaURL))
             imageView.clipToOutline = true
-        }
-        else{
+        } else {
             imageView.visibility = View.GONE
             videoView.visibility = View.VISIBLE
             videoView.setVideoPath(mediaURL)
             val mediaController = MediaController(this)
             mediaController.setAnchorView(videoView)
             videoView.setMediaController(mediaController)
-            videoView.start()
+            videoView.seekTo(30)
+            if (PreferenceHelper.shouldAutoPlayVideos(this)) {
+                videoView.start()
+            }
         }
     }
 }
