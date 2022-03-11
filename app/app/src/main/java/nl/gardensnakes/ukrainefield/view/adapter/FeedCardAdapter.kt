@@ -18,12 +18,15 @@ import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
+import nl.gardensnakes.ukrainefield.helper.PreferenceHelper
 import nl.gardensnakes.ukrainefield.helper.TimeHelper
 
 
-class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
+class FeedCardAdapter(private val mList: List<FeedMessageResponse>) :
+    RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
 
     lateinit var context: Context
+
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -42,7 +45,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
         resetView(holder)
 
-        if(feedData.images.isNotEmpty()){
+        if (feedData.images.isNotEmpty()) {
             val imageList = ArrayList<SlideUIModel>()
             feedData.images.forEach {
                 imageList.add(SlideUIModel("${HttpRoutes.MEDIA_PROXY}/$it", ""))
@@ -63,19 +66,25 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
         holder.titleView.text = getTitleText(feedData)
         holder.textView.text = feedData.text
 
-        holder.postedAtText.text = "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
+        holder.postedAtText.text =
+            "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
 
-        if(feedData.videos.isEmpty() && feedData.images.isEmpty()){
+        if (feedData.videos.isEmpty() && feedData.images.isEmpty()) {
             holder.imageSlide.visibility = View.GONE
-        }
-        else if(feedData.videos.isNotEmpty()) {
+        } else if (feedData.videos.isNotEmpty()) {
             holder.imageSlide.visibility = View.GONE
             holder.videoView.visibility = View.VISIBLE
             holder.videoView.setVideoPath("${HttpRoutes.MEDIA_PROXY}/${feedData.videos[0]}")
             val mediaController = MediaController(context)
             mediaController.setAnchorView(holder.videoView)
             holder.videoView.setMediaController(mediaController)
-            holder.videoView.start()
+
+            if (PreferenceHelper.shouldAutoPlayVideos(context)) {
+                holder.videoView.start()
+            }
+            else{
+                holder.videoView.seekTo(250)
+            }
 
             holder.videoView.setOnClickListener {
                 val intent = Intent(context, MediaDetailActivity::class.java).apply {
@@ -87,12 +96,12 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
         }
 
-        if(feedData.messageURL == null){
+        if (feedData.messageURL == null) {
             holder.shareView.visibility = View.GONE
             holder.browserButtonView.visibility = View.GONE
         }
 
-        holder.shareView.setOnClickListener{
+        holder.shareView.setOnClickListener {
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, getTitleText(feedData));
@@ -103,7 +112,7 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
 
         holder.browserButtonView.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(feedData.messageURL))
-            startActivity(context, browserIntent,null)
+            startActivity(context, browserIntent, null)
         }
 
     }
@@ -113,18 +122,17 @@ class FeedCardAdapter(private val mList: List<FeedMessageResponse>) : RecyclerVi
         return mList.size
     }
 
-    private fun resetView(holder: ViewHolder){
+    private fun resetView(holder: ViewHolder) {
         holder.videoView.stopPlayback()
         holder.videoView.visibility = View.GONE
         holder.imageSlide.visibility = View.VISIBLE
     }
 
-    private fun getTitleText(feedData: FeedMessageResponse): String{
-        var title =  "Message by: ${feedData.author}"
-        if(feedData.type == "twitter"){
+    private fun getTitleText(feedData: FeedMessageResponse): String {
+        var title = "Message by: ${feedData.author}"
+        if (feedData.type == "twitter") {
             title = "Tweet by: ${feedData.twitterData?.authorDisplayName ?: feedData.author}"
-        }
-        else if(feedData.type == "telegram"){
+        } else if (feedData.type == "telegram") {
             title = "Telegram message by: ${feedData.telegramData?.authorName ?: feedData.author}"
         }
         return title

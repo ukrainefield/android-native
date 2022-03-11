@@ -30,13 +30,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.ukraine_map -> {
                     fragment = MapFragment()
                 }
-//                R.id.settings -> {
-//                    //TODO
-//                    //settingsFragment = SettingsFragment()
-//                    //fragmentManager.beginTransaction().replace(R.id.container, settingsFragment).commit()
-//                    //supportFragmentManager.beginTransaction().remove(fragment).commit()
-//                    false
-//                }
+                R.id.settings -> {
+                    fragment = SettingsFragment()
+                }
             }
 
             supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
