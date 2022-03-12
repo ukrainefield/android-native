@@ -45,6 +45,7 @@ class MapFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(view.context);
+        mFirebaseAnalytics.setCurrentScreen(this.requireActivity(), this.javaClass.simpleName, this.javaClass.simpleName);
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
 

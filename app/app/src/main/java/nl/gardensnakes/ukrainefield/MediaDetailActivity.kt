@@ -27,6 +27,7 @@ class MediaDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.setCurrentScreen(this, this.javaClass.simpleName, this.javaClass.simpleName);
 
         BigImageViewer.initialize(GlideImageLoader.with(this));
         setContentView(R.layout.activity_media_detail)
