@@ -3,7 +3,6 @@ package nl.gardensnakes.ukrainefield.view.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afdhal_fa.imageslider.ImageSlider
 import com.afdhal_fa.imageslider.`interface`.ItemClickListener
 import com.afdhal_fa.imageslider.model.SlideUIModel
-import com.bumptech.glide.Glide
 import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
@@ -72,7 +70,7 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         holder.postedAtText.text =
             "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
 
-        updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder, position)
+        updateBookmarkText(feedData.messageURL ?: "", holder, position)
 
         if (feedData.videos.isEmpty() && feedData.images.isEmpty()) {
             holder.imageSlide.visibility = View.GONE
@@ -121,8 +119,8 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         }
 
         holder.bookmarkButton.setOnClickListener {
-            bookmarkHelper.bookmark(feedData, context)
-            updateBookmarkText(bookmarkHelper, feedData.messageURL ?: "", holder, position)
+            BookmarkHelper().bookmark(feedData, context)
+            updateBookmarkText(feedData.messageURL ?: "", holder, position)
         }
 
     }
@@ -132,8 +130,8 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         return mList.size
     }
 
-    private fun updateBookmarkText(bookmarkHelper: BookmarkHelper, messageUrl: String, holder: ViewHolder, position: Int){
-        var isBookmarked = bookmarkHelper.isFavorite(messageUrl, context)
+    private fun updateBookmarkText(messageUrl: String, holder: ViewHolder, position: Int){
+        var isBookmarked = BookmarkHelper().isFavorite(messageUrl, context)
         if(isBookmarked){
             holder.bookmarkButton.text = context.getString(R.string.remove_bookmark)
         }

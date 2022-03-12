@@ -28,6 +28,10 @@ class BookmarkHelper {
         if(json != null) saveToJsonFile(json, context)
     }
 
+    fun resetBookmarks(context: Context){
+        saveToJsonFile("", context)
+    }
+
 
     fun isFavorite(messageUrl: String, context: Context): Boolean {
         return getAll(context)?.any {

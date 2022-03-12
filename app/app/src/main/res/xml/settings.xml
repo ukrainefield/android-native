@@ -11,4 +11,16 @@
         app:defaultValue="true"/>
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:key="other_category"
+        app:title="@string/other">
+
+        <Preference
+            app:key="reset_bookmarks"
+            app:summary="@string/reset_bookmarks_summary"
+            app:title="@string/reset_bookmarks"/>
+
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

@@ -1,13 +1,10 @@
 package nl.gardensnakes.ukrainefield
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.*
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -17,5 +14,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+        findPreference<Preference>("reset_bookmarks")?.setOnPreferenceClickListener {
+            context?.let { context -> BookmarkHelper().resetBookmarks(context) }
+            true
+        }
     }
 }

@@ -16,4 +16,7 @@
     <string name="ukraine_map">Ukraine Map</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="settings">Settings</string>
+    <string name="other">Other</string>
+    <string name="reset_bookmarks_summary">Removes all bookmarked items</string>
+    <string name="reset_bookmarks">Reset bookmarks</string>
 </resources>
