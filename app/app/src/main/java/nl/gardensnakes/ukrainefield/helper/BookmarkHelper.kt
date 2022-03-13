@@ -102,6 +102,7 @@ class BookmarkHelper {
                 ret = stringBuilder.toString()
             }
         } catch (e: FileNotFoundException) {
+            resetBookmarks(context)
             Log.e("BookmarkHelper", "File not found: $e")
         } catch (e: IOException) {
             Log.e("BookmarkHelper", "Can not read file: $e")

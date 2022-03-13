@@ -15,6 +15,7 @@ import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.MapService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
+import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
 import nl.gardensnakes.ukrainefield.helper.SwipeRefreshHelper
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
 import nl.gardensnakes.ukrainefield.view.adapter.MapCardAdapter
@@ -45,13 +46,14 @@ class MapFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(view.context);
+        FirebaseHelper.updateCurrentScreen(mFirebaseAnalytics, this.requireActivity(), this.javaClass.simpleName, this.javaClass.simpleName)
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
 
         swipeRefreshLayout = view.findViewById(R.id.map_refresh_layout)
         mapRecyclerView = view.findViewById(R.id.map_recycle_view)
 
-        mapCardAdapter = MapCardAdapter(emptyList())
+        mapCardAdapter = MapCardAdapter(emptyList(), mFirebaseAnalytics)
         mapRecyclerView.adapter = mapCardAdapter
 
         setupRefreshLayout()
@@ -73,7 +75,7 @@ class MapFragment : Fragment() {
             val feedData = feedService.getAllMaps()
             swipeRefreshLayout.isRefreshing = false
             if(feedData != null && context != null) {
-                mapCardAdapter = MapCardAdapter(feedData.mapData)
+                mapCardAdapter = MapCardAdapter(feedData.mapData, mFirebaseAnalytics)
                 mapRecyclerView.adapter = mapCardAdapter
                 mapRecyclerView.layoutManager = LinearLayoutManager(requireView().context);
             }

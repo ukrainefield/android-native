@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afdhal_fa.imageslider.ImageSlider
 import com.afdhal_fa.imageslider.`interface`.ItemClickListener
 import com.afdhal_fa.imageslider.model.SlideUIModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
 import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
+import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
 import nl.gardensnakes.ukrainefield.helper.PreferenceHelper
 import nl.gardensnakes.ukrainefield.helper.TimeHelper
 import java.lang.Exception
 
 
-class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val deleteOnUnBookmark: Boolean = false) :
+class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val mFirebaseAnalytics: FirebaseAnalytics,  private val deleteOnUnBookmark: Boolean = false) :
     RecyclerView.Adapter<FeedCardAdapter.ViewHolder>() {
 
     lateinit var context: Context
@@ -42,7 +44,6 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val feedData = mList[position]
-        val bookmarkHelper = BookmarkHelper()
 
         resetView(holder)
 
@@ -70,7 +71,7 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         holder.postedAtText.text =
             "${context.getString(R.string.posted_at)} ${TimeHelper.epochToTimeString(feedData.epochTime.toLong())}"
 
-        updateBookmarkText(feedData.messageURL ?: "", holder, position)
+        updateBookmarkText(feedData.messageURL ?: "", holder, position, false)
 
         if (feedData.videos.isEmpty() && feedData.images.isEmpty()) {
             holder.imageSlide.visibility = View.GONE
@@ -105,15 +106,17 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         }
 
         holder.shareView.setOnClickListener {
+            FirebaseHelper.logShareEvent(mFirebaseAnalytics, feedData.messageURL ?: "Unknown")
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT, getTitleText(feedData));
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, getTitleText(feedData))
             sendIntent.putExtra(Intent.EXTRA_TEXT, feedData.messageURL)
             sendIntent.type = "text/plain"
             startActivity(context, sendIntent, null)
         }
 
         holder.browserButtonView.setOnClickListener {
+            FirebaseHelper.logOpenInBrowserEvent(mFirebaseAnalytics, feedData.messageURL ?: "Unkown")
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(feedData.messageURL))
             startActivity(context, browserIntent, null)
         }
@@ -130,12 +133,18 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         return mList.size
     }
 
-    private fun updateBookmarkText(messageUrl: String, holder: ViewHolder, position: Int){
-        var isBookmarked = BookmarkHelper().isFavorite(messageUrl, context)
+    private fun updateBookmarkText(messageUrl: String, holder: ViewHolder, position: Int, logEvent: Boolean = true){
+        val isBookmarked = BookmarkHelper().isFavorite(messageUrl, context)
         if(isBookmarked){
+            if(logEvent) {
+                FirebaseHelper.logBookmarkEvent(mFirebaseAnalytics, messageUrl)
+            }
             holder.bookmarkButton.text = context.getString(R.string.remove_bookmark)
         }
         else{
+            if(logEvent) {
+                FirebaseHelper.logUnbookmarkEvent(mFirebaseAnalytics, messageUrl)
+            }
             holder.bookmarkButton.text = context.getString(R.string.bookmark)
             if(deleteOnUnBookmark){
                 try {
@@ -166,7 +175,7 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageSlide = itemView.findViewById<ImageSlider>(R.id.feed_card_thumbnail)
+        val imageSlide: ImageSlider = itemView.findViewById(R.id.feed_card_thumbnail)
         val titleView: TextView = itemView.findViewById(R.id.feed_card_title)
         val textView: TextView = itemView.findViewById(R.id.feed_card_text)
         val postedAtText: TextView = itemView.findViewById(R.id.feed_card_posted_at_text)
