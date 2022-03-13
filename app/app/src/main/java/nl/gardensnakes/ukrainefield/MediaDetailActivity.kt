@@ -12,6 +12,7 @@ import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.github.piasy.biv.view.BigImageView
 import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
+import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
 import nl.gardensnakes.ukrainefield.helper.PreferenceHelper
 
 class MediaDetailActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class MediaDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        mFirebaseAnalytics.setCurrentScreen(this, this.javaClass.simpleName, this.javaClass.simpleName);
+        FirebaseHelper.updateCurrentScreen(mFirebaseAnalytics, this, this.javaClass.simpleName, this.javaClass.simpleName)
 
         BigImageViewer.initialize(GlideImageLoader.with(this));
         setContentView(R.layout.activity_media_detail)

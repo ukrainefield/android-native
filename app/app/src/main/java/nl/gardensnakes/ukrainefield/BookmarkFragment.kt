@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
 import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
+import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
 
 class BookmarkFragment : Fragment() {
@@ -34,6 +35,7 @@ class BookmarkFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_bookmark, container, false)
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(view.context);
+        FirebaseHelper.updateCurrentScreen(mFirebaseAnalytics, this.requireActivity(), this.javaClass.simpleName, this.javaClass.simpleName)
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
         feedRecyclerView = view.findViewById(R.id.bookmark_recycler_view)
@@ -48,7 +50,7 @@ class BookmarkFragment : Fragment() {
         else {
             noBookmarksText.visibility = View.GONE
             feedRecyclerView.visibility = View.VISIBLE
-            feedCardAdapter = FeedCardAdapter(bookmarkedItems.sortedByDescending { it.epochTime}, true)
+            feedCardAdapter = FeedCardAdapter(bookmarkedItems.sortedByDescending { it.epochTime}, mFirebaseAnalytics, true)
             feedRecyclerView.adapter = feedCardAdapter
             feedRecyclerView.layoutManager = LinearLayoutManager(view.context);
         }

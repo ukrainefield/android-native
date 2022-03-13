@@ -13,16 +13,22 @@ import com.bumptech.glide.Glide
 import com.github.piasy.biv.BigImageViewer
 import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.github.piasy.biv.view.BigImageView
+import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.MediaDetailActivity
 import nl.gardensnakes.ukrainefield.R
 import nl.gardensnakes.ukrainefield.data.remote.HttpRoutes
 import nl.gardensnakes.ukrainefield.data.remote.dto.feed.FeedMessageResponse
 import nl.gardensnakes.ukrainefield.data.remote.dto.map.MapDataResponse
+import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
 
 
-class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Adapter<MapCardAdapter.ViewHolder>() {
+class MapCardAdapter(
+    private val mList: List<MapDataResponse>,
+    private val mFirebaseAnalytics: FirebaseAnalytics
+) : RecyclerView.Adapter<MapCardAdapter.ViewHolder>() {
 
     lateinit var context: Context
+
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -48,6 +54,7 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
         holder.title.text = "Reuters Invasion Map | Updated ${mapData.displayUpdatedTime}"
         holder.description.text = mapData.messageText
         holder.shareButton.setOnClickListener {
+            FirebaseHelper.logShareEvent(mFirebaseAnalytics, mapData.messageLink)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(Intent.EXTRA_TEXT, mapData.messageLink)
@@ -64,13 +71,19 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
         }
 
         holder.articleButton.setOnClickListener {
+            FirebaseHelper.logOpenInBrowserEvent(mFirebaseAnalytics, mapData.messageLink)
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mapData.messageLink))
-            startActivity(context, browserIntent,null)
+            startActivity(context, browserIntent, null)
         }
 
         holder.mapButton.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(HttpRoutes.REUTERS_INVASION_MAP))
-            startActivity(context, browserIntent,null)
+            FirebaseHelper.logOpenInBrowserEvent(
+                mFirebaseAnalytics,
+                HttpRoutes.REUTERS_INVASION_MAP
+            )
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(HttpRoutes.REUTERS_INVASION_MAP))
+            startActivity(context, browserIntent, null)
         }
 
     }
@@ -80,7 +93,7 @@ class MapCardAdapter(private val mList: List<MapDataResponse>) : RecyclerView.Ad
         return mList.size
     }
 
-    private fun resetView(holder: ViewHolder){
+    private fun resetView(holder: ViewHolder) {
 
     }
 

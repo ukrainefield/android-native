@@ -13,6 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import nl.gardensnakes.ukrainefield.data.remote.FeedService
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
+import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
 import nl.gardensnakes.ukrainefield.helper.SwipeRefreshHelper
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
 
@@ -42,14 +43,14 @@ class NewsFeedFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_newsfeed, container, false)
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(view.context);
-        mFirebaseAnalytics.setCurrentScreen(this.requireActivity(), this.javaClass.simpleName, this.javaClass.simpleName);
+        FirebaseHelper.updateCurrentScreen(mFirebaseAnalytics, this.requireActivity(), this.javaClass.simpleName, this.javaClass.simpleName)
 
         useProxyServer = SavedPreferences.useProxyServer(requireContext())
 
         swipeRefreshLayout = view.findViewById(R.id.newsfeed_refresh_layout)
         feedRecyclerView = view.findViewById(R.id.newsfeed_recycle_view)
 
-        feedCardAdapter = FeedCardAdapter(emptyList())
+        feedCardAdapter = FeedCardAdapter(emptyList(), mFirebaseAnalytics)
         feedRecyclerView.adapter = feedCardAdapter
 
         setupRefreshLayout()
@@ -71,7 +72,7 @@ class NewsFeedFragment : Fragment() {
             val feedData = feedService.getAllFeed()
             swipeRefreshLayout.isRefreshing = false
             if(feedData != null && context != null) {
-                feedCardAdapter = FeedCardAdapter(feedData.messages)
+                feedCardAdapter = FeedCardAdapter(feedData.messages, mFirebaseAnalytics)
                 feedRecyclerView.adapter = feedCardAdapter
                 feedRecyclerView.layoutManager = LinearLayoutManager(requireView().context);
             }
