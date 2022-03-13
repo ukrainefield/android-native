@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
@@ -27,6 +28,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setupNewsSourcesClick()
         setupGithubReposClick()
         setupTwitterClick()
+
+        setupVersionTitle()
+    }
+
+    private fun setupVersionTitle() {
+        findPreference<PreferenceCategory>("version_category")?.title = "${requireContext().getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
     }
 
     private fun setupResetBookmarksClick() {

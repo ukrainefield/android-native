@@ -47,5 +47,10 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:key="version_category"
+        app:icon="@drawable/ic_baseline_adb_24"
+        app:title="Version: 1.0"/>
+
 
 </PreferenceScreen>

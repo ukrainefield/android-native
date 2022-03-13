@@ -26,4 +26,5 @@
     <string name="github_title">GitHub Repositories</string>
     <string name="twitter_summary">Twitter is the place where we make announcements about the app</string>
     <string name="twitter_title">Twitter account</string>
+    <string name="version">Version:</string>
 </resources>
