@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         app:key="media_category"
+        app:icon="@drawable/ic_baseline_perm_media_24"
         app:title="@string/media">
 
 
@@ -12,13 +13,37 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:key="other_category"
-        app:title="@string/other">
+        app:key="bookmarks_category"
+        app:icon="@drawable/ic_baseline_bookmark_24"
+        app:title="@string/bookmarks">
 
         <Preference
             app:key="reset_bookmarks"
             app:summary="@string/reset_bookmarks_summary"
             app:title="@string/reset_bookmarks"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="links_category"
+        app:icon="@drawable/ic_baseline_link_24"
+        app:title="@string/official_links">
+
+        <Preference
+            app:key="news_sources_link"
+            app:summary="@string/news_sources_summary"
+            app:title="@string/news_sources_title"/>
+
+        <Preference
+            app:key="github_link"
+            app:summary="@string/github_summary"
+            app:title="@string/github_title"/>
+
+        <Preference
+            app:key="twitter_link"
+            app:summary="@string/twitter_summary"
+            app:title="@string/twitter_title"/>
+
 
     </PreferenceCategory>
 

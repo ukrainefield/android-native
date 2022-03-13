@@ -19,4 +19,11 @@
     <string name="other">Other</string>
     <string name="reset_bookmarks_summary">Removes all bookmarked items</string>
     <string name="reset_bookmarks">Reset bookmarks</string>
+    <string name="official_links">Official Links</string>
+    <string name="news_sources_summary">All the news source we use in our app</string>
+    <string name="news_sources_title">News sources</string>
+    <string name="github_summary">GitHub is the place where you can find all the code that make this app possible</string>
+    <string name="github_title">GitHub Repositories</string>
+    <string name="twitter_summary">Twitter is the place where we make announcements about the app</string>
+    <string name="twitter_title">Twitter account</string>
 </resources>
