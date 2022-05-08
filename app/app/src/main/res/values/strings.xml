@@ -31,4 +31,6 @@
     <string name="show_russian_sources">Show Russian news sources</string>
     <string name="show_ukraine_sources">Show Ukrainian news sources</string>
     <string name="no_news_found">No news found, try changing your filters on the Settings page</string>
+    <string name="show_telegram_sources">Show Telegram sources</string>
+    <string name="show_twitter_sources">Show Twitter sources</string>
 </resources>

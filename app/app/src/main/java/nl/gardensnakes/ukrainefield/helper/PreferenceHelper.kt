@@ -17,5 +17,13 @@ class PreferenceHelper {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             return sharedPreferences.getBoolean("ukraineNewsSources", true)
         }
+        fun shouldShowTwitterSources(context: Context): Boolean {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return sharedPreferences.getBoolean("twitterSources", true)
+        }
+        fun shouldShowTelegramSources(context: Context): Boolean {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return sharedPreferences.getBoolean("telegramSources", true)
+        }
     }
 }

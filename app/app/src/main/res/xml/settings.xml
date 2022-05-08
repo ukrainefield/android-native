@@ -26,6 +26,14 @@
             app:key="ukraineNewsSources"
             app:title="@string/show_ukraine_sources"
             app:defaultValue="true"/>
+        <SwitchPreferenceCompat
+            app:key="twitterSources"
+            app:title="@string/show_twitter_sources"
+            app:defaultValue="true"/>
+        <SwitchPreferenceCompat
+            app:key="telegramSources"
+            app:title="@string/show_telegram_sources"
+            app:defaultValue="true"/>
     </PreferenceCategory>
 
 
