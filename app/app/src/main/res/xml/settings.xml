@@ -13,6 +13,23 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:key="sources_category"
+        app:icon="@drawable/ic_baseline_wysiwyg_24"
+        app:title="@string/news_sources">
+
+
+        <SwitchPreferenceCompat
+            app:key="russianNewsSources"
+            app:title="@string/show_russian_sources"
+            app:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            app:key="ukraineNewsSources"
+            app:title="@string/show_ukraine_sources"
+            app:defaultValue="true"/>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
         app:key="bookmarks_category"
         app:icon="@drawable/ic_baseline_bookmark_24"
         app:title="@string/bookmarks">

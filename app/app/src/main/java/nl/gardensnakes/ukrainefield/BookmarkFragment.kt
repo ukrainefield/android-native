@@ -12,6 +12,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import nl.gardensnakes.ukrainefield.data.remote.SavedPreferences
 import nl.gardensnakes.ukrainefield.helper.BookmarkHelper
 import nl.gardensnakes.ukrainefield.helper.FirebaseHelper
+import nl.gardensnakes.ukrainefield.helper.NewsFeedHelper
 import nl.gardensnakes.ukrainefield.view.adapter.FeedCardAdapter
 
 class BookmarkFragment : Fragment() {
@@ -41,16 +42,16 @@ class BookmarkFragment : Fragment() {
         feedRecyclerView = view.findViewById(R.id.bookmark_recycler_view)
         noBookmarksText = view.findViewById(R.id.bookmark_no_bookmark_text)
 
-        val bookmarkedItems = BookmarkHelper().getAll(view.context)
-
-        if(bookmarkedItems == null || bookmarkedItems.isEmpty()){
+        val bookmarkedItems = BookmarkHelper().getAll(view.context) ?: emptyList()
+        val filteredBookmarks = NewsFeedHelper.filterSourcesBasedOnPreferences(bookmarkedItems.sortedByDescending { it.epochTime}, requireContext())
+        if(filteredBookmarks.isEmpty()){
             noBookmarksText.visibility = View.VISIBLE
             feedRecyclerView.visibility = View.GONE
         }
         else {
             noBookmarksText.visibility = View.GONE
             feedRecyclerView.visibility = View.VISIBLE
-            feedCardAdapter = FeedCardAdapter(bookmarkedItems.sortedByDescending { it.epochTime}, mFirebaseAnalytics, true)
+            feedCardAdapter = FeedCardAdapter(filteredBookmarks, mFirebaseAnalytics, true)
             feedRecyclerView.adapter = feedCardAdapter
             feedRecyclerView.layoutManager = LinearLayoutManager(view.context);
         }

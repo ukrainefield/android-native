@@ -27,4 +27,8 @@
     <string name="twitter_summary">Twitter is the place where we make announcements about the app</string>
     <string name="twitter_title">Twitter account</string>
     <string name="version">Version:</string>
+    <string name="news_sources">News sources</string>
+    <string name="show_russian_sources">Show Russian news sources</string>
+    <string name="show_ukraine_sources">Show Ukrainian news sources</string>
+    <string name="no_news_found">No news found, try changing your filters on the Settings page</string>
 </resources>
