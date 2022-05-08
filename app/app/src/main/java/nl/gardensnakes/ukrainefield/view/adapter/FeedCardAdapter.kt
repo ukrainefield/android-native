@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afdhal_fa.imageslider.ImageSlider
 import com.afdhal_fa.imageslider.`interface`.ItemClickListener
@@ -46,6 +47,9 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         val feedData = mList[position]
 
         resetView(holder)
+
+        holder.tagRecycleView!!.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        holder.tagRecycleView!!.adapter = CategoryAdapter(feedData.categories)
 
         if (feedData.images.isNotEmpty()) {
             val imageList = ArrayList<SlideUIModel>()
@@ -183,5 +187,6 @@ class FeedCardAdapter(private var mList: List<FeedMessageResponse>, private val 
         val browserButtonView: Button = itemView.findViewById(R.id.feed_card_browser_button)
         val videoView: VideoView = itemView.findViewById(R.id.feed_card_video)
         var bookmarkButton: Button = ItemView.findViewById(R.id.feed_card_bookmark_button)
+        val tagRecycleView: RecyclerView = ItemView.findViewById(R.id.feed_tag_recycle_view)
     }
 }

@@ -78,6 +78,11 @@
                 android:id="@+id/feed_card_posted_at_text"
                 />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/feed_tag_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
         </LinearLayout>
 
         Buttons

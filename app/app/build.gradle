@@ -34,7 +34,7 @@ android {
         minSdk 29
         targetSdk 32
         versionCode getCustomVersionCode()
-        versionName "1.6.1"
+        versionName "1.7.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
